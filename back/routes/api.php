@@ -6,32 +6,29 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 
 /*
-|----------------------------------------------------------------------
+|--------------------------------------------------------------------------
 | API Routes
-|----------------------------------------------------------------------
-| Estas são as rotas da API da sua aplicação. Elas são carregadas pelo
-| RouteServiceProvider e agrupadas sob o middleware "api".
-|
+|--------------------------------------------------------------------------
 */
 
-// Rota pública para criar usuário (POST)
-Route::post('user', [UserController::class, 'store']);
+// Rotas de autenticação públicas
+Route::post('login', [AuthController::class, 'login']);
 
-// Rotas de autenticação
-Route::post('login', [AuthController::class, 'login']); // Login
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum'); // Logout
-
-// Rotas protegidas por autenticação (para ações show, update e destroy)
+// Rotas protegidas por autenticação
 Route::middleware('auth:sanctum')->group(function () {
-    // Rota para exibir dados do usuário autenticado (GET)
-    Route::get('user', [UserController::class, 'show']);  // Alterado para /api/user
-    // Rota para exibir dados de um usuário específico (GET)
-    Route::get('user/{id}', [UserController::class, 'show']);  // Caso queira manter a busca por ID
 
-    // Rota para atualizar os dados de um usuário (PUT ou PATCH)
+    // Logout
+    Route::post('logout', [AuthController::class, 'logout']);
+
+    // Usuário autenticado vê seus dados
+    Route::get('user', [UserController::class, 'show']);
+
+    // Admin pode criar usuários
+    Route::post('user', [UserController::class, 'store'])->middleware('can:create-user');
+
+    // Mostrar, atualizar e deletar usuários - pode ajustar autorização aqui também
+    Route::get('user/{id}', [UserController::class, 'show']);
     Route::put('user/{id}', [UserController::class, 'update']);
     Route::patch('user/{id}', [UserController::class, 'update']);
-    
-    // Rota para excluir um usuário (DELETE)
     Route::delete('user/{id}', [UserController::class, 'destroy']);
 });
