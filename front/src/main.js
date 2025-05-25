@@ -6,14 +6,25 @@ import './assets/main.css';
 import api from './services/api';
 import VueTheMask from 'vue-the-mask';
 
-// Cria a instância do aplicativo Vue
 const app = createApp(App);
 
-// Adiciona Axios como uma propriedade global
+// Axios global
 app.config.globalProperties.$axios = api;
 
-// Usa o Vuex e o Vue Router
-app.use(store).use(router).mount('#app');
+app.use(store).use(router);
 
-// Adiciona Maskara nos campos cpf, whatsapp e cep
+// Verifica localStorage antes de montar
+const authToken = localStorage.getItem('authToken');
+const userName = localStorage.getItem('userName');
+
+if (authToken && userName) {
+  localStorage.clear();
+  // Redireciona para /login manualmente
+  router.push('/login').then(() => {
+    app.mount('#app');
+  });
+} else {
+  app.mount('#app');
+}
+
 app.use(VueTheMask);

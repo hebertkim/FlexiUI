@@ -207,7 +207,6 @@ import {
     XMarkIcon,
     CurrencyDollarIcon,
     ShieldExclamationIcon,
-    ClipboardIcon,
     ArrowRightOnRectangleIcon,  // Ícone para o "Sign out"
 } from '@heroicons/vue/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
@@ -215,169 +214,63 @@ import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 const navigation = [
     {
         name: 'Dashboard', href: '#', icon: HomeIcon, current: true,
-        submenu: [{
-            name: 'Overview',
-            href: '#',
-            icon: UsersIcon
-        },
-        {
-            name: 'Performance Analysis',
-            href: '#',
-            icon: CalendarIcon
-        },
-        {
-            name: 'Alerts and Notifications',
-            href: '#',
-            icon: BellIcon
-        },
-        {
-            name: 'Quick Reports',
-            href: '#',
-            icon: CurrencyDollarIcon
-        }
+        submenu: [
+            { name: 'Overview', href: '#', icon: UsersIcon },
+            { name: 'Performance Analysis', href: '#', icon: CalendarIcon },
+            { name: 'Alerts and Notifications', href: '#', icon: BellIcon },
+            { name: 'Quick Reports', href: '#', icon: CurrencyDollarIcon }
         ]
     },
 
     {
         name: 'Registration', href: '#', icon: UsersIcon, current: false,
-        submenu: [{
-            name: 'Customer Registration',
-            href: '#',
-            icon: UsersIcon
-        },
-        {
-            name: 'Supplier Registration',
-            href: '#',
-            icon: UsersIcon
-        },
-        {
-            name: 'Employee Registration',
-            href: '#',
-            icon: UsersIcon
-        },
-        {
-            name: 'Bank Accounts Registration',
-            href: '#',
-            icon: CurrencyDollarIcon
-        },
-        {
-            name: 'Cost Center Registration',
-            href: '#',
-            icon: CurrencyDollarIcon
-        }
+        submenu: [
+            { name: 'Customer Registration', href: '#', icon: UsersIcon },
+            { name: 'Supplier Registration', href: '#', icon: UsersIcon },
+            { name: 'Employee Registration', href: '#', icon: UsersIcon },
+            { name: 'Bank Accounts Registration', href: '#', icon: CurrencyDollarIcon },
+            { name: 'Cost Center Registration', href: '#', icon: CurrencyDollarIcon }
         ]
     },
 
     {
         name: 'Finance', href: '#', icon: CurrencyDollarIcon, current: false,
-        submenu: [{
-            name: 'Accounts Payable',
-            href: '#',
-            icon: CurrencyDollarIcon
-        },
-        {
-            name: 'Accounts Receivable',
-            href: '#',
-            icon: CurrencyDollarIcon
-        },
-        {
-            name: 'Cash Flow',
-            href: '#',
-            icon: CurrencyDollarIcon
-        },
-        {
-            name: 'Financial Reports',
-            href: '#',
-            icon: CurrencyDollarIcon
-        },
+        submenu: [
+            { name: 'Accounts Payable', href: '#', icon: CurrencyDollarIcon },
+            { name: 'Accounts Receivable', href: '#', icon: CurrencyDollarIcon },
+            { name: 'Cash Flow', href: '#', icon: CurrencyDollarIcon },
+            { name: 'Financial Reports', href: '#', icon: CurrencyDollarIcon }
         ]
     },
 
     {
         name: 'Budget and Planning', href: '#', icon: CalendarIcon, current: false,
-        submenu: [{
-            name: 'Annual Budget',
-            href: '#',
-            icon: CalendarIcon
-        },
-        {
-            name: 'Forecasts and Projections',
-            href: '#',
-            icon: CalendarIcon
-        },
-        {
-            name: 'Deviation Analysis',
-            href: '#',
-            icon: CalendarIcon
-        },
+        submenu: [
+            { name: 'Annual Budget', href: '#', icon: CalendarIcon },
+            { name: 'Forecasts and Projections', href: '#', icon: CalendarIcon },
+            { name: 'Deviation Analysis', href: '#', icon: CalendarIcon }
         ]
     },
 
     {
         name: 'Cost Control', href: '#', icon: CurrencyDollarIcon, current: false,
-        submenu: [{
-            name: 'Fixed Costs',
-            href: '#',
-            icon: CurrencyDollarIcon
-        },
-        {
-            name: 'Variable Costs',
-            href: '#',
-            icon: CurrencyDollarIcon
-        },
-        {
-            name: 'Cost Analysis',
-            href: '#',
-            icon: CurrencyDollarIcon
-        },
+        submenu: [
+            { name: 'Fixed Costs', href: '#', icon: CurrencyDollarIcon },
+            { name: 'Variable Costs', href: '#', icon: CurrencyDollarIcon },
+            { name: 'Cost Analysis', href: '#', icon: CurrencyDollarIcon }
         ]
     },
 
     {
         name: 'Risks and Compliance', href: '#', icon: ShieldExclamationIcon, current: false,
-        submenu: [{
-            name: 'Risk Management',
-            href: '#',
-            icon: ShieldExclamationIcon
-        },
-        {
-            name: 'Compliance',
-            href: '#',
-            icon: ShieldExclamationIcon
-        },
-        {
-            name: 'Internal Audit',
-            href: '#',
-            icon: ShieldExclamationIcon
-        },
+        submenu: [
+            { name: 'Risk Management', href: '#', icon: ShieldExclamationIcon },
+            { name: 'Compliance', href: '#', icon: ShieldExclamationIcon },
+            { name: 'Internal Audit', href: '#', icon: ShieldExclamationIcon }
         ]
-    },
+    }
+];
 
-    {
-        name: 'Reports', href: '#', icon: ClipboardIcon, current: false,
-        submenu: [{
-            name: 'Financial Reports',
-            href: '#',
-            icon: ShieldExclamationIcon
-        },
-        {
-            name: 'Performance Reports',
-            href: '#',
-            icon: ShieldExclamationIcon
-        },
-        {
-            name: 'Cost Reports',
-            href: '#',
-            icon: ShieldExclamationIcon
-        },
-        {
-            name: 'Compliance Reports',
-            href: '#',
-            icon: ShieldExclamationIcon
-        },
-        ]
-    },
-]
 
 const sidebarOpen = ref(false)
 
