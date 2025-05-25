@@ -18,13 +18,13 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
 
     // Logout
-    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
     // Usuário autenticado vê seus dados
     Route::get('user', [UserController::class, 'show']);
 
     // Admin pode criar usuários
-    Route::post('user', [UserController::class, 'store'])->middleware('can:create-user');
+    Route::middleware(['auth:sanctum', 'admin'])->post('user', [UserController::class, 'store']);
 
     // Mostrar, atualizar e deletar usuários - pode ajustar autorização aqui também
     Route::get('user/{id}', [UserController::class, 'show']);

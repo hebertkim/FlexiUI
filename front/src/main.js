@@ -18,7 +18,7 @@ const authToken = localStorage.getItem('authToken');
 const userName = localStorage.getItem('userName');
 
 if (authToken && userName) {
-  localStorage.clear();
+  //localStorage.clear();
   // Redireciona para /login manualmente
   router.push('/login').then(() => {
     app.mount('#app');

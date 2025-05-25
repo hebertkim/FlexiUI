@@ -22,34 +22,26 @@ class UserController extends Controller
     // Cria um novo usuário
     public function store(Request $request)
     {
-        Log::info('Recebendo dados para criação de usuário.', ['data' => $request->all()]);
+        // Autoriza o usuário atual para criar novos usuários
+        $this->authorize('create', User::class);
 
-        try {
-            // Validação de entrada
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|string|min:8|confirmed',
-            ]);
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'nullable|string|in:admin,user',
+        ]);
 
-            Log::info('Dados validados com sucesso.', ['validated_data' => $validated]);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->role = $request->role ?? 'user'; // default 'user'
+        $user->save();
 
-            // Cria o usuário e faz o hash da senha
-            $validated['password'] = Hash::make($validated['password']);
-            $user = User::create($validated);
-
-            Log::info('Usuário criado com sucesso.', ['user_id' => $user->id]);
-
-            // Retorna a resposta
-            return response()->json($user, 201);
-        } catch (ValidationException $e) {
-            Log::error('Erro de validação ao tentar criar usuário.', ['errors' => $e->errors()]);
-            return response()->json(['errors' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            Log::error('Erro inesperado ao tentar criar usuário.', ['exception' => $e->getMessage()]);
-            return response()->json(['error' => 'Erro no servidor.'], 500);
-        }
+        return response()->json(['message' => 'User created successfully'], 201);
     }
+
 
     // Exibe os dados de um usuário específico
     public function show($id = null)

@@ -27,6 +27,17 @@
             placeholder="Enter your email" required />
         </div>
 
+        <div class="mb-4">
+          <label for="role" class="block mb-1 text-sm font-medium text-gray-700">Role</label>
+          <select id="role" v-model="role"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+            required>
+            <option disabled value="">Select a role</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
         <!-- Password Fields -->
         <div class="mb-4">
           <label for="password" class="block mb-1 text-sm font-medium text-gray-700">Password</label>
@@ -62,52 +73,41 @@ import api from '@/services/api';
 export default {
   name: "RegisterScreen",
 
-  components: {
-  },
-
   data() {
     return {
       name: "",
       email: "",
       password: "",
       confirmPassword: "",
+      role: "",
     };
   },
 
   methods: {
     async onSubmit() {
-      console.log("Registration form submitted");
-
-      // Password validation
       if (this.password !== this.confirmPassword) {
-        console.log("Passwords do not match");
         alert("Passwords do not match!");
         return;
       }
 
-      // Form data
       const formData = {
         name: this.name,
         email: this.email,
         password: this.password,
         password_confirmation: this.confirmPassword,
+        role: this.role,
       };
 
       try {
-        console.log("Sending data to the API...");
         const response = await api.post('/user', formData);
 
         if (response.status === 200 || response.status === 201) {
-          console.log("Registration successful:", response);
           alert('Registration successful!');
           this.resetForm();
 
-          // Check and redirect
           if (this.$router) {
-            console.log("Redirecting to /login");
             this.$router.push('/login');
           } else {
-            console.error("Vue Router is not available.");
             alert("Unable to redirect. Check the Vue Router configuration.");
           }
         }
@@ -118,11 +118,11 @@ export default {
     },
 
     resetForm() {
-      console.log("Resetting form");
       this.name = "";
       this.email = "";
       this.password = "";
       this.confirmPassword = "";
+      this.role = "";
     },
   },
 };
