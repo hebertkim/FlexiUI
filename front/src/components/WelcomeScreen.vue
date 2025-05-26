@@ -186,7 +186,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import {
     Dialog,
@@ -208,13 +208,13 @@ import {
     XMarkIcon,
     CurrencyDollarIcon,
     ShieldExclamationIcon,
-    ArrowRightOnRectangleIcon,  // Ícone para o "Sign out"
+    ArrowRightOnRectangleIcon,
 } from '@heroicons/vue/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
-const navigation = [
+const navigation = reactive([
     {
-        name: 'Dashboard', href: '#', icon: HomeIcon, current: true,
+        name: 'Dashboard', href: '#', icon: HomeIcon, current: true, isOpen: false,
         submenu: [
             { name: 'Overview', href: '/overview', icon: UsersIcon },
             { name: 'Performance Analysis', href: '/overview/trends', icon: CalendarIcon },
@@ -223,7 +223,7 @@ const navigation = [
         ]
     },
     {
-        name: 'Registration', href: '#', icon: UsersIcon, current: false,
+        name: 'Registration', href: '#', icon: UsersIcon, current: false, isOpen: false,
         submenu: [
             { name: 'Customer Registration', href: '#', icon: UsersIcon },
             { name: 'Supplier Registration', href: '#', icon: UsersIcon },
@@ -233,7 +233,7 @@ const navigation = [
         ]
     },
     {
-        name: 'Finance', href: '#', icon: CurrencyDollarIcon, current: false,
+        name: 'Finance', href: '#', icon: CurrencyDollarIcon, current: false, isOpen: false,
         submenu: [
             { name: 'Accounts Payable', href: '#', icon: CurrencyDollarIcon },
             { name: 'Accounts Receivable', href: '#', icon: CurrencyDollarIcon },
@@ -242,7 +242,7 @@ const navigation = [
         ]
     },
     {
-        name: 'Budget and Planning', href: '#', icon: CalendarIcon, current: false,
+        name: 'Budget and Planning', href: '#', icon: CalendarIcon, current: false, isOpen: false,
         submenu: [
             { name: 'Annual Budget', href: '#', icon: CalendarIcon },
             { name: 'Forecasts and Projections', href: '#', icon: CalendarIcon },
@@ -250,7 +250,7 @@ const navigation = [
         ]
     },
     {
-        name: 'Cost Control', href: '#', icon: CurrencyDollarIcon, current: false,
+        name: 'Cost Control', href: '#', icon: CurrencyDollarIcon, current: false, isOpen: false,
         submenu: [
             { name: 'Fixed Costs', href: '#', icon: CurrencyDollarIcon },
             { name: 'Variable Costs', href: '#', icon: CurrencyDollarIcon },
@@ -258,39 +258,35 @@ const navigation = [
         ]
     },
     {
-        name: 'Risks and Compliance', href: '#', icon: ShieldExclamationIcon, current: false,
+        name: 'Risks and Compliance', href: '#', icon: ShieldExclamationIcon, current: false, isOpen: false,
         submenu: [
             { name: 'Risk Management', href: '#', icon: ShieldExclamationIcon },
             { name: 'Compliance', href: '#', icon: ShieldExclamationIcon },
             { name: 'Internal Audit', href: '#', icon: ShieldExclamationIcon }
         ]
     }
-];
-
+])
 
 const sidebarOpen = ref(false)
 
-// Computed property to retrieve username from localStorage if available
 const userName = computed(() => {
     return localStorage.getItem('userName') || 'Guest'
 })
 
 const router = useRouter()
 
-// Function to toggle the submenu visibility
 function toggleSubmenu(item) {
     if (item.submenu) {
         navigation.forEach(i => {
             if (i !== item) {
-                i.isOpen = false;
+                i.isOpen = false
             }
-        });
-        item.isOpen = !item.isOpen;
+        })
+        item.isOpen = !item.isOpen
     }
 }
 
 function handleLogout() {
-    // Logic for logout
     router.push('/login')
 }
 </script>
