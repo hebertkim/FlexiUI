@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ErpConnectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,8 @@ use App\Http\Controllers\Api\AuthController;
 
 // Rotas de autenticação públicas
 Route::post('login', [AuthController::class, 'login']);
+
+Route::apiResource('erp-connections', ErpConnectionController::class);
 
 // Rotas protegidas por autenticação
 Route::middleware('auth:sanctum')->group(function () {
@@ -31,4 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('user/{id}', [UserController::class, 'update']);
     Route::patch('user/{id}', [UserController::class, 'update']);
     Route::delete('user/{id}', [UserController::class, 'destroy']);
+
+
+    
 });

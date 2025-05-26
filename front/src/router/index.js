@@ -6,6 +6,7 @@ import TrendsChart from '@/components/dashboard/TrendsChart.vue'
 import LoginScreen from '@/components/LoginScreen.vue'
 import OverView from '@/components/OverView.vue'
 import RegisterScreen from '@/components/RegisterScreen.vue'
+import RegisterDataBase from '@/components/settings/RegisterDataBase.vue'
 import WelcomeScreen from '@/components/WelcomeScreen.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -46,6 +47,16 @@ const routes = [
             component: TrendsChart
           }
         ]
+      },
+      {
+        path: '/settings/database',
+        name: 'database',
+        component: RegisterDataBase
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: RegisterScreen
       }
     ]
   },
@@ -54,11 +65,7 @@ const routes = [
     name: 'login',
     component: LoginScreen
   },
-  {
-    path: '/register',
-    name: 'register',
-    component: RegisterScreen
-  },
+
 ]
 
 const router = createRouter({
@@ -69,14 +76,13 @@ const router = createRouter({
 // Guard para proteger rotas privadas
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/register']
-  const authRequired = !publicPages.some(page => to.path.startsWith(page))
-  const loggedIn = !!localStorage.getItem('authToken')
+  const authRequired = !publicPages.includes(to.path)
+  const token = localStorage.getItem('authToken')
 
   console.log('Navegando para:', to.path)
-  console.log('Requer auth?', authRequired)
-  console.log('Logado?', loggedIn)
+  console.log('Token:', token)
 
-  if (authRequired && !loggedIn) {
+  if (authRequired && !token) {
     console.log('Redirecionando para login...')
     next({ path: '/login', query: { redirect: to.fullPath } })
   } else {

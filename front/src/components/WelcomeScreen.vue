@@ -30,7 +30,7 @@
                                 <div class="flex h-16 shrink-0 items-center">
                                     <img class="h-8 w-auto"
                                         src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                                        alt="Your Company" />
+                                        alt="FlexUI" />
                                 </div>
                                 <nav class="flex flex-1 flex-col">
                                     <ul role="list" class="flex flex-1 flex-col gap-y-7">
@@ -100,13 +100,6 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="mt-auto">
-                            <RouterLink to="#"
-                                class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-500 hover:bg-gray-800 hover:text-white">
-                                <Cog6ToothIcon class="size-6 shrink-0" aria-hidden="true" />
-                                Settings
-                            </RouterLink>
                         </li>
                     </ul>
                 </nav>
@@ -264,7 +257,17 @@ const navigation = reactive([
             { name: 'Compliance', href: '#', icon: ShieldExclamationIcon },
             { name: 'Internal Audit', href: '#', icon: ShieldExclamationIcon }
         ]
+    },
+    {
+        name: 'Settings', href: '#', icon: Cog6ToothIcon, current: false, isOpen: false,
+        submenu: [
+            { name: 'Users', href: '/settings/users', icon: UsersIcon },
+            { name: 'Preferences', href: '/settings/preferences', icon: Cog6ToothIcon },
+            { name: 'Access Control', href: '/settings/access', icon: ShieldExclamationIcon },
+            { name: 'Database Settings', href: '/settings/database', icon: Cog6ToothIcon }
+        ]
     }
+
 ])
 
 const sidebarOpen = ref(false)

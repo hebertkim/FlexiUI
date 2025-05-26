@@ -4,11 +4,6 @@
     <!-- Sign Up Card -->
     <div class="w-full max-w-md p-4 bg-white rounded-lg shadow-md">
 
-      <!-- Logo -->
-      <div class="mb-6 mt-2">
-        <img src="/default-logo.png" alt="Logo" class="w-16 h-16 mx-auto rounded-full shadow-md" />
-      </div>
-
       <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Create Account</h2>
 
       <!-- Input Fields -->
