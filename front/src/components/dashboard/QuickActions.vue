@@ -17,45 +17,56 @@
 
 <script setup>
 import {
-  PlusCircleIcon,
   DocumentPlusIcon,
+  CurrencyDollarIcon,
+  ChartBarIcon,
   UserPlusIcon,
-  ShoppingBagIcon,
+  ClipboardDocumentCheckIcon,
+  ArrowDownTrayIcon,
   ChatBubbleLeftRightIcon,
   Cog6ToothIcon,
 } from '@heroicons/vue/24/outline'
 
-// Ações rápidas (exemplo)
 const actions = [
   {
-    label: 'Nova Venda',
-    icon: ShoppingBagIcon,
-    onClick: () => alert('Nova Venda'),
+    label: 'Novo Lançamento',
+    icon: DocumentPlusIcon,
+    onClick: () => alert('Abrir formulário de lançamento contábil'),
+  },
+  {
+    label: 'Nova Receita',
+    icon: CurrencyDollarIcon,
+    onClick: () => alert('Lançar nova receita'),
+  },
+  {
+    label: 'Nova Despesa',
+    icon: ArrowDownTrayIcon,
+    onClick: () => alert('Lançar nova despesa'),
   },
   {
     label: 'Novo Cliente',
     icon: UserPlusIcon,
-    onClick: () => alert('Novo Cliente'),
+    onClick: () => alert('Cadastrar novo cliente'),
   },
   {
-    label: 'Novo Produto',
-    icon: PlusCircleIcon,
-    onClick: () => alert('Novo Produto'),
+    label: 'Relatórios',
+    icon: ChartBarIcon,
+    onClick: () => alert('Visualizar relatórios contábeis'),
   },
   {
-    label: 'Nova Ordem',
-    icon: DocumentPlusIcon,
-    onClick: () => alert('Nova Ordem'),
+    label: 'Guias e Tributos',
+    icon: ClipboardDocumentCheckIcon,
+    onClick: () => alert('Gerar ou consultar guias de impostos'),
   },
   {
     label: 'Suporte',
     icon: ChatBubbleLeftRightIcon,
-    onClick: () => alert('Suporte'),
+    onClick: () => alert('Abrir suporte'),
   },
   {
     label: 'Configurações',
     icon: Cog6ToothIcon,
-    onClick: () => alert('Configurações'),
+    onClick: () => alert('Abrir configurações'),
   },
 ]
 </script>

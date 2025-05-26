@@ -1,39 +1,39 @@
 <template>
   <div class="bg-white dark:bg-gray-800 rounded-2xl shadow p-4 h-96">
-    <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">Tendências de Performance</h2>
+    <h2 class="text-lg font-semibold mb-4 text-white dark:text-white">Tendências de Performance</h2>
 
     <div class="mb-4 flex space-x-2 overflow-x-auto">
       <button
         @click="currentChart = 'line'"
-        :class="currentChart === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+        :class="currentChart === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
         class="px-4 py-1 rounded whitespace-nowrap"
       >
         Linha
       </button>
       <button
         @click="currentChart = 'bar'"
-        :class="currentChart === 'bar' ? 'bg-green-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+        :class="currentChart === 'bar' ? 'bg-green-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
         class="px-4 py-1 rounded whitespace-nowrap"
       >
         Barras
       </button>
       <button
         @click="currentChart = 'pie'"
-        :class="currentChart === 'pie' ? 'bg-purple-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+        :class="currentChart === 'pie' ? 'bg-purple-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
         class="px-4 py-1 rounded whitespace-nowrap"
       >
         Pizza
       </button>
       <button
         @click="currentChart = 'doughnut'"
-        :class="currentChart === 'doughnut' ? 'bg-pink-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+        :class="currentChart === 'doughnut' ? 'bg-pink-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
         class="px-4 py-1 rounded whitespace-nowrap"
       >
         Rosca
       </button>
       <button
         @click="currentChart = 'radar'"
-        :class="currentChart === 'radar' ? 'bg-yellow-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+        :class="currentChart === 'radar' ? 'bg-yellow-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
         class="px-4 py-1 rounded whitespace-nowrap"
       >
         Radar
@@ -152,33 +152,96 @@ const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    legend: { position: 'top' },
+    legend: {
+      position: 'top',
+      labels: {
+        color: '#ffffff',
+        font: {
+          size: 14,
+        },
+      },
+    },
     title: {
       display: true,
       text: 'Tendências de Performance',
+      color: '#ffffff',
+      font: {
+        size: 16,
+        weight: 'bold',
+      },
+    },
+    tooltip: {
+      titleColor: '#ffffff',
+      bodyColor: '#ffffff',
+      backgroundColor: '#111827',
     },
   },
   scales: {
-    y: { beginAtZero: true },
+    x: {
+      ticks: {
+        color: '#ffffff',
+      },
+      grid: {
+        display: false, // ou use: display: false para remover também as verticais
+      },
+    },
+    y: {
+      beginAtZero: true,
+      ticks: {
+        color: '#ffffff',
+      },
+      grid: {
+        display: false, // REMOVE as linhas horizontais
+      },
+    },
   },
 }
+
+
 
 const radarOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    legend: { position: 'top' },
+    legend: {
+      position: 'top',
+      labels: {
+        color: '#ffffff',
+        font: {
+          size: 14,
+        },
+      },
+    },
     title: {
       display: true,
       text: 'Radar de Desempenho',
+      color: '#ffffff',
+      font: {
+        size: 16,
+        weight: 'bold',
+      },
     },
   },
   scales: {
     r: {
-      angleLines: { display: true },
-      suggestedMin: 0,
-      suggestedMax: 100,
+      angleLines: {
+        color: '#6b7280',
+      },
+      grid: {
+        color: '#6b7280',
+      },
+      pointLabels: {
+        color: '#ffffff',
+        font: {
+          size: 12,
+        },
+      },
+      ticks: {
+        color: '#ffffff',
+        backdropColor: 'transparent',
+      },
     },
   },
 }
+
 </script>

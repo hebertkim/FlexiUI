@@ -26,38 +26,46 @@
 import {
   ExclamationTriangleIcon,
   CheckCircleIcon,
-  MagnifyingGlassCircleIcon,
   CurrencyDollarIcon,
+  DocumentMagnifyingGlassIcon,
+  ChartPieIcon,
 } from '@heroicons/vue/24/outline'
 
 const recentAnalyses = [
   {
     id: 1,
-    title: 'Desvio no centro de custo',
-    description: 'Identificado lançamento fora do padrão no centro de custo "Marketing".',
+    title: 'Erro em classificação fiscal',
+    description: 'Produto classificado com NCM incorreto impactando o cálculo de ICMS.',
     icon: ExclamationTriangleIcon,
     date: 'Hoje',
   },
   {
     id: 2,
-    title: 'Análise de Lucro Bruto',
-    description: 'Relatório mensal gerado com sucesso para todas as filiais.',
-    icon: CheckCircleIcon,
+    title: 'Lucro Bruto abaixo do esperado',
+    description: 'Queda de 18% no lucro bruto em comparação com o mês anterior.',
+    icon: ChartPieIcon,
     date: 'Ontem',
   },
   {
     id: 3,
-    title: 'Conferência de notas fiscais',
-    description: 'Notas fiscais divergentes encontradas no período 01/05 - 15/05.',
-    icon: MagnifyingGlassCircleIcon,
-    date: '22 Mai',
+    title: 'Inconsistência no plano de contas',
+    description: 'Contas duplicadas encontradas no agrupamento "Despesas Operacionais".',
+    icon: DocumentMagnifyingGlassIcon,
+    date: '24 Mai',
   },
   {
     id: 4,
-    title: 'Revisão de impostos',
-    description: 'Análise de ICMS e IPI para produtos cadastrados incorretamente.',
+    title: 'Tributação divergente',
+    description: 'CST e CFOP conflitantes em 12 notas fiscais emitidas.',
     icon: CurrencyDollarIcon,
-    date: '20 Mai',
+    date: '22 Mai',
+  },
+  {
+    id: 5,
+    title: 'Conferência automatizada concluída',
+    description: 'Todos os lançamentos do período 01/05 a 25/05 foram conciliados.',
+    icon: CheckCircleIcon,
+    date: '21 Mai',
   },
 ]
 </script>

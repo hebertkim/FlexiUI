@@ -18,7 +18,6 @@
 
 <script setup>
 import {
-  UserGroupIcon,
   ChartBarIcon,
   CurrencyDollarIcon,
   ShoppingBagIcon,
@@ -26,28 +25,29 @@ import {
 
 const metrics = [
   {
-    title: 'Usuários',
-    value: '1.248',
-    icon: UserGroupIcon,
-    bg: 'bg-blue-500',
-  },
-  {
-    title: 'Vendas',
-    value: 'R$ 75.000',
+    title: 'Receita do Mês',
+    value: 'R$ 124.500,00',
     icon: CurrencyDollarIcon,
     bg: 'bg-green-500',
   },
   {
-    title: 'Pedidos',
-    value: '389',
+    title: 'Despesas do Mês',
+    value: 'R$ 89.200,00',
     icon: ShoppingBagIcon,
-    bg: 'bg-purple-500',
+    bg: 'bg-red-500',
   },
   {
-    title: 'Performance',
-    value: '92%',
+    title: 'Lucro Líquido',
+    value: 'R$ 35.300,00',
     icon: ChartBarIcon,
-    bg: 'bg-yellow-500',
+    bg: 'bg-blue-500',
   },
+  {
+    title: 'Impostos a Pagar',
+    value: 'R$ 12.750,00',
+    icon: CurrencyDollarIcon,
+    bg: 'bg-yellow-500',
+  }
 ]
+
 </script>
