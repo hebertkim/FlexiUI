@@ -37,30 +37,30 @@
                                         <li>
                                             <ul role="list" class="-mx-2 space-y-1">
                                                 <li v-for="item in navigation" :key="item.name">
-                                                    <RouterLink :to="item.href"
+                                                    <a :href="item.href"
                                                         :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold']"
                                                         @click="toggleSubmenu(item)">
                                                         <component :is="item.icon" class="size-6 shrink-0"
                                                             aria-hidden="true" />
                                                         {{ item.name }}
-                                                    </RouterLink>
+                                                    </a>
                                                     <ul v-if="item.submenu && item.isOpen" class="pl-4 space-y-2">
                                                         <li v-for="subitem in item.submenu" :key="subitem.name">
-                                                            <RouterLink :to="subitem.href"
+                                                            <a :href="subitem.href"
                                                                 :class="'text-gray-400 hover:bg-gray-800 hover:text-white group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold'">
                                                                 {{ subitem.name }}
-                                                            </RouterLink>
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li class="mt-auto">
-                                            <RouterLink to="#"
+                                            <a href="#"
                                                 class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-gray-800 hover:text-white">
                                                 <Cog6ToothIcon class="size-6 shrink-0" aria-hidden="true" />
                                                 Settings
-                                            </RouterLink>
+                                            </a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -84,29 +84,29 @@
                         <li>
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li v-for="item in navigation" :key="item.name">
-                                    <RouterLink :to="item.href" :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-500 hover:bg-gray-800 hover:text-white',
+                                    <a :href="item.href" :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-500 hover:bg-gray-800 hover:text-white',
                                         'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold']"
                                         @click="toggleSubmenu(item)">
                                         <component :is="item.icon" class="size-6 shrink-0" aria-hidden="true" />
                                         {{ item.name }}
-                                    </RouterLink>
+                                    </a>
                                     <ul v-if="item.submenu && item.isOpen" class="pl-4 space-y-2">
                                         <li v-for="subitem in item.submenu" :key="subitem.name">
-                                            <RouterLink :to="subitem.href"
+                                            <a :href="subitem.href"
                                                 :class="'text-gray-500 hover:bg-gray-800 hover:text-white group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold'">
                                                 {{ subitem.name }}
-                                            </RouterLink>
+                                            </a>
                                         </li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li class="mt-auto">
-                            <RouterLink to="#"
+                            <a href="#"
                                 class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-500 hover:bg-gray-800 hover:text-white">
                                 <Cog6ToothIcon class="size-6 shrink-0" aria-hidden="true" />
                                 Settings
-                            </RouterLink>
+                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -159,27 +159,26 @@
                                 <MenuItems
                                     class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                                     <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                                    <a :href="item.href"
-                                        :class="[active ? 'bg-gray-50 outline-none' : '', 'block px-3 py-1 text-sm/6 text-gray-900']"
-                                        @click.prevent="handleLogout">{{ item.name }}</a>
+                                        <RouterLink :to="item.href"
+                                            :class="[active ? 'bg-gray-50 outline-none' : '', 'block px-3 py-1 text-sm/6 text-gray-900']"
+                                            @click.prevent="handleLogout">{{ item.name }}</RouterLink>
                                     </MenuItem>
                                 </MenuItems>
                             </transition>
                         </Menu>
-
-                        <a href="#" class="flex items-center text-gray-400 hover:text-gray-500"
+                        <RouterLink to="#" class="flex items-center text-gray-400 hover:text-gray-500"
                             @click.prevent="handleLogout">
                             <ArrowRightOnRectangleIcon class="size-6" aria-hidden="true" />
-                        </a>
+                        </RouterLink>
                     </div>
                 </div>
             </div>
 
             <main class="py-10">
-                <div class="px-4 sm:px-6 lg:px-8">
-                    <router-view />
-                </div>
-            </main>
+  <div class="px-4 sm:px-6 lg:px-8">
+    <router-view />
+  </div>
+</main>
 
         </div>
     </div>

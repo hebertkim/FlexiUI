@@ -67,7 +67,7 @@ export default {
         if (response.data.success) {
           localStorage.setItem("authToken", response.data.token);
           localStorage.setItem("userName", response.data.user.name);
-          this.$router.push("/");
+          this.$router.push("/overview");
         } else {
           alert(response.data.message || "Login failed. Please try again.");
         }
