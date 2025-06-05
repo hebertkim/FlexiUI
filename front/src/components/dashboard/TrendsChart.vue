@@ -1,46 +1,20 @@
 <template>
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow p-4 h-96">
-    <h2 class="text-lg font-semibold mb-4 text-white dark:text-white">Tendências de Performance</h2>
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 min-h-[28rem]">
+    <h2 class="text-xl font-semibold mb-6 text-white dark:text-white">Tendências de Performance</h2>
 
-    <div class="mb-4 flex space-x-2 overflow-x-auto">
+    <div class="mb-6 flex flex-wrap gap-2">
       <button
-        @click="currentChart = 'line'"
-        :class="currentChart === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
-        class="px-4 py-1 rounded whitespace-nowrap"
+        v-for="type in chartTypes"
+        :key="type"
+        @click="currentChart = type"
+        :class="buttonClass(type)"
+        class="px-4 py-1 rounded transition whitespace-nowrap"
       >
-        Linha
-      </button>
-      <button
-        @click="currentChart = 'bar'"
-        :class="currentChart === 'bar' ? 'bg-green-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
-        class="px-4 py-1 rounded whitespace-nowrap"
-      >
-        Barras
-      </button>
-      <button
-        @click="currentChart = 'pie'"
-        :class="currentChart === 'pie' ? 'bg-purple-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
-        class="px-4 py-1 rounded whitespace-nowrap"
-      >
-        Pizza
-      </button>
-      <button
-        @click="currentChart = 'doughnut'"
-        :class="currentChart === 'doughnut' ? 'bg-pink-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
-        class="px-4 py-1 rounded whitespace-nowrap"
-      >
-        Rosca
-      </button>
-      <button
-        @click="currentChart = 'radar'"
-        :class="currentChart === 'radar' ? 'bg-yellow-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white'"
-        class="px-4 py-1 rounded whitespace-nowrap"
-      >
-        Radar
+        {{ typeLabels[type] }}
       </button>
     </div>
 
-    <div class="h-72">
+    <div class="relative h-auto min-h-[24rem] p-4">
       <Line v-if="currentChart === 'line'" :data="lineData" :options="chartOptions" />
       <Bar v-if="currentChart === 'bar'" :data="barData" :options="chartOptions" />
       <Pie v-if="currentChart === 'pie'" :data="pieData" :options="chartOptions" />
@@ -81,6 +55,19 @@ ChartJS.register(
 )
 
 const currentChart = ref('line')
+const chartTypes = ['line', 'bar', 'pie', 'doughnut', 'radar']
+const typeLabels = {
+  line: 'Linha',
+  bar: 'Barras',
+  pie: 'Pizza',
+  doughnut: 'Rosca',
+  radar: 'Radar',
+}
+
+const buttonClass = (type) =>
+  currentChart.value === type
+    ? 'bg-blue-500 text-white shadow-md'
+    : 'bg-gray-200 dark:bg-gray-700 text-white dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'
 
 const lineData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -151,6 +138,14 @@ const radarData = {
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
+  layout: {
+    padding: {
+      top: 24,
+      bottom: 24,
+      left: 24,
+      right: 24,
+    },
+  },
   plugins: {
     legend: {
       position: 'top',
@@ -162,13 +157,7 @@ const chartOptions = {
       },
     },
     title: {
-      display: true,
-      text: 'Tendências de Performance',
-      color: '#ffffff',
-      font: {
-        size: 16,
-        weight: 'bold',
-      },
+      display: false,
     },
     tooltip: {
       titleColor: '#ffffff',
@@ -180,28 +169,36 @@ const chartOptions = {
     x: {
       ticks: {
         color: '#ffffff',
+        padding: 8,
       },
       grid: {
-        display: false, // ou use: display: false para remover também as verticais
+        display: false,
       },
     },
     y: {
       beginAtZero: true,
       ticks: {
         color: '#ffffff',
+        padding: 8,
       },
       grid: {
-        display: false, // REMOVE as linhas horizontais
+        display: false,
       },
     },
   },
 }
 
-
-
 const radarOptions = {
   responsive: true,
   maintainAspectRatio: false,
+  layout: {
+    padding: {
+      top: 24,
+      bottom: 24,
+      left: 24,
+      right: 24,
+    },
+  },
   plugins: {
     legend: {
       position: 'top',
@@ -213,13 +210,7 @@ const radarOptions = {
       },
     },
     title: {
-      display: true,
-      text: 'Radar de Desempenho',
-      color: '#ffffff',
-      font: {
-        size: 16,
-        weight: 'bold',
-      },
+      display: false,
     },
   },
   scales: {
@@ -243,5 +234,4 @@ const radarOptions = {
     },
   },
 }
-
 </script>

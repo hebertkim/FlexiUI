@@ -76,7 +76,7 @@
             <!-- Sidebar component -->
             <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900/20 backdrop-blur-lg px-6 pb-4">
                 <div class="flex h-16 mt-6 shrink-0 items-center">
-                    <img class="w-16 h-16 mb-3 mx-auto rounded-full shadow-md" src="../assets/logo.png "
+                    <img class="w-16 h-16 mb-3 mx-auto rounded-full shadow-md" src="../assets/logo.jpeg "
                         alt="Controllytics Pro" />
                 </div>
                 <nav class="flex flex-1 flex-col">
@@ -264,7 +264,8 @@ const navigation = reactive([
             { name: 'Users', href: '/settings/users', icon: UsersIcon },
             { name: 'Preferences', href: '/settings/preferences', icon: Cog6ToothIcon },
             { name: 'Access Control', href: '/settings/access', icon: ShieldExclamationIcon },
-            { name: 'Database Settings', href: '/settings/database', icon: Cog6ToothIcon }
+            { name: 'Database Settings', href: '/settings/database', icon: Cog6ToothIcon },
+            { name: 'Connect Database', href: '/settings/erp-connect', icon: Cog6ToothIcon }
         ]
     }
 

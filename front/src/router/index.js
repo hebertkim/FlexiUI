@@ -6,6 +6,7 @@ import TrendsChart from '@/components/dashboard/TrendsChart.vue'
 import LoginScreen from '@/components/LoginScreen.vue'
 import OverView from '@/components/OverView.vue'
 import RegisterScreen from '@/components/RegisterScreen.vue'
+import ConectaBanco from '@/components/settings/ConectaBanco.vue'
 import RegisterDataBase from '@/components/settings/RegisterDataBase.vue'
 import WelcomeScreen from '@/components/WelcomeScreen.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -52,6 +53,11 @@ const routes = [
         path: '/settings/database',
         name: 'database',
         component: RegisterDataBase
+      },
+      {
+        path: '/settings/erp-connect',
+        name: 'connectdatabase',
+        component: ConectaBanco
       },
       {
         path: '/register',

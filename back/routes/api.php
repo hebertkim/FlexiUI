@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ErpConnectionController;
+use App\Http\Controllers\Api\ErpConnectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +16,13 @@ use App\Http\Controllers\Api\ErpConnectionController;
 Route::post('login', [AuthController::class, 'login']);
 
 Route::apiResource('erp-connections', ErpConnectionController::class);
+Route::post('/erp-connect', [ErpConnectController::class, 'connect']);
+Route::post('/erp-connect', [\App\Http\Controllers\Api\ErpConnectionController::class, 'conectar']);
+Route::post('/gerar-migrations', [ErpConnectionController::class, 'gerarMigrations']);
+Route::match(['get', 'post'], 'gerar-migrations', [ErpConnectionController::class, 'gerarMigrations']);
+
+
+
 
 // Rotas protegidas por autenticação
 Route::middleware('auth:sanctum')->group(function () {
