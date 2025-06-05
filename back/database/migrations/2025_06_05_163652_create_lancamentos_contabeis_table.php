@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('lancamentos_contabeis', function (Blueprint $table) {
-            $table->bigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->date('data');
             $table->string('descricao', 255)->nullable();
             $table->decimal('valor', 15, 2);
@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->bigInteger('centro_custo_id')->nullable();
             $table->bigInteger('conta_contabil_id')->nullable();
             $table->bigInteger('documento_id')->nullable();
-            $table->boolean('conciliado')->nullable();
+            $table->tinyInteger('conciliado')->nullable();
         });
     }
 

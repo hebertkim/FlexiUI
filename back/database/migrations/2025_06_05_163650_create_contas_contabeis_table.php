@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('contas_contabeis', function (Blueprint $table) {
-            $table->bigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->string('codigo', 20);
             $table->string('descricao', 255);
             $table->string('tipo', 7);

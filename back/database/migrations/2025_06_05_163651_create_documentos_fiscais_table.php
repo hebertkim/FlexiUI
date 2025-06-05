@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('documentos_fiscais', function (Blueprint $table) {
-            $table->bigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->string('numero', 50)->nullable();
             $table->string('serie', 10)->nullable();
             $table->date('data_emissao')->nullable();

@@ -49,6 +49,7 @@ class ErpConnectionController extends Controller
             $validated['password'] = encrypt($validated['password']);
         }
 
+        // Você pode querer ajustar o updateOrCreate para usar um campo único real, em vez de 'id' fixo
         $conexao = ErpConnection::updateOrCreate(
             ['id' => 1],
             $validated
@@ -180,7 +181,7 @@ class ErpConnectionController extends Controller
                 if ($resultado['success']) {
                     Log::info("Migration da tabela '{$tabela}' salva com sucesso.");
                 } else {
-                    Log::warning("Erro ao salvar migration da tabela '{$tabela}': " . $resultado['message']);
+                    Log::warning("Erro ao salvar migration da tabela '{$tabela}': " . $resultado['error']);
                 }
             }
 
@@ -238,55 +239,59 @@ class ErpConnectionController extends Controller
                 $migration .= "        Schema::create('{$tabela}', function (Blueprint \$table) {\n";
 
                 foreach ($colunas as $col) {
+                    // Para a coluna 'id', usar $table->id() que já define primary e auto increment
+                    if ($col->COLUMN_NAME === 'id') {
+                        $migration .= "            \$table->id();\n";
+                        continue;
+                    }
+
                     $nullable = $col->IS_NULLABLE === 'YES' ? '->nullable()' : '';
-                    $primary = $col->COLUMN_KEY === 'PRI' ? '->primary()' : '';
                     $autoIncrement = strpos($col->EXTRA, 'auto_increment') !== false ? '->autoIncrement()' : '';
+                    // Não usar primary key explicitamente aqui para evitar múltiplas PKs
 
                     $tipo = match ($col->DATA_TYPE) {
                         'int', 'integer' => 'integer',
                         'bigint' => 'bigInteger',
+                        'smallint' => 'smallInteger',
+                        'tinyint' => 'tinyInteger',
                         'varchar' => 'string',
                         'char' => 'char',
                         'text' => 'text',
-                        'datetime' => 'dateTime',
                         'date' => 'date',
+                        'datetime' => 'dateTime',
                         'timestamp' => 'timestamp',
                         'decimal' => 'decimal',
                         'float' => 'float',
                         'double' => 'double',
-                        'boolean', 'tinyint' => 'boolean',
+                        'boolean' => 'boolean',
                         default => 'string',
                     };
 
-                    $linha = "            \$table->{$tipo}('{$col->COLUMN_NAME}'";
-
-                    if (in_array($tipo, ['string', 'char']) && $col->CHARACTER_MAXIMUM_LENGTH) {
-                        $linha .= ", {$col->CHARACTER_MAXIMUM_LENGTH}";
-                    } elseif ($tipo === 'decimal' && $col->NUMERIC_PRECISION !== null && $col->NUMERIC_SCALE !== null) {
-                        $linha .= ", {$col->NUMERIC_PRECISION}, {$col->NUMERIC_SCALE}";
+                    // Para decimal, float, double usar precisões
+                    if (in_array($tipo, ['decimal', 'float', 'double'])) {
+                        $precision = $col->NUMERIC_PRECISION ?? 8;
+                        $scale = $col->NUMERIC_SCALE ?? 2;
+                        $migration .= "            \$table->{$tipo}('{$col->COLUMN_NAME}', {$precision}, {$scale}){$nullable}{$autoIncrement};\n";
+                    } elseif ($tipo === 'string' && $col->CHARACTER_MAXIMUM_LENGTH) {
+                        $migration .= "            \$table->{$tipo}('{$col->COLUMN_NAME}', {$col->CHARACTER_MAXIMUM_LENGTH}){$nullable}{$autoIncrement};\n";
+                    } elseif ($tipo === 'char' && $col->CHARACTER_MAXIMUM_LENGTH) {
+                        $migration .= "            \$table->{$tipo}('{$col->COLUMN_NAME}', {$col->CHARACTER_MAXIMUM_LENGTH}){$nullable}{$autoIncrement};\n";
+                    } else {
+                        $migration .= "            \$table->{$tipo}('{$col->COLUMN_NAME}'){$nullable}{$autoIncrement};\n";
                     }
+                }
 
-                    $linha .= ")";
+                // Adiciona timestamps se existir colunas created_at e updated_at
+                $temCreatedAt = collect($colunas)->contains(fn($c) => $c->COLUMN_NAME === 'created_at');
+                $temUpdatedAt = collect($colunas)->contains(fn($c) => $c->COLUMN_NAME === 'updated_at');
 
-                    if ($primary) {
-                        $linha .= "->primary()";
-                    }
-
-                    if ($autoIncrement) {
-                        $linha .= "->autoIncrement()";
-                    }
-
-                    if ($nullable && !$primary) { // primary keys usually not nullable
-                        $linha .= "->nullable()";
-                    }
-
-                    $linha .= ";";
-
-                    $migration .= $linha . "\n";
+                if ($temCreatedAt && $temUpdatedAt) {
+                    $migration .= "            \$table->timestamps();\n";
                 }
 
                 $migration .= "        });\n";
                 $migration .= "    }\n\n";
+
                 $migration .= "    public function down()\n    {\n";
                 $migration .= "        Schema::dropIfExists('{$tabela}');\n";
                 $migration .= "    }\n";
@@ -295,40 +300,30 @@ class ErpConnectionController extends Controller
                 $migrations[$tabela] = $migration;
             }
 
-            Log::info('Geração de migrations concluída com sucesso.');
-
             return ['success' => true, 'migrations' => $migrations];
-        } catch (\Throwable $e) {
-            Log::error('Erro ao gerar migrations: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            Log::error('Erro na geração de migrations: ' . $e->getMessage());
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 
     private function salvarMigrationsEmArquivos(array $migrations)
     {
-        Log::info('Salvando arquivos de migrations');
-
         $resultado = [];
 
-        $pathBase = database_path('migrations/auto_generated');
-
-        if (!file_exists($pathBase)) {
-            mkdir($pathBase, 0755, true);
-            Log::info("Criado diretório para migrations em: {$pathBase}");
-        }
-
         foreach ($migrations as $tabela => $conteudo) {
-            $nomeArquivo = $pathBase . '/' . date('Y_m_d_His') . "_create_{$tabela}_table.php";
+            $fileName = date('Y_m_d_His') . '_create_' . $tabela . '_table.php';
+            $path = database_path('migrations/' . $fileName);
 
             try {
-                file_put_contents($nomeArquivo, $conteudo);
-                $resultado[$tabela] = ['success' => true, 'file' => $nomeArquivo];
-            } catch (\Throwable $e) {
+                file_put_contents($path, $conteudo);
+                $resultado[$tabela] = ['success' => true];
+            } catch (\Exception $e) {
                 $resultado[$tabela] = ['success' => false, 'error' => $e->getMessage()];
             }
+            // Aguarda 1 segundo para garantir nomes diferentes
+            sleep(1);
         }
-
-        Log::info('Salvamento dos arquivos finalizado');
 
         return $resultado;
     }

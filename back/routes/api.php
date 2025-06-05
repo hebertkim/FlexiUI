@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ErpConnectionController;
 use App\Http\Controllers\Api\ErpConnectController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +47,26 @@ Route::middleware('auth:sanctum')->group(function () {
 
     
 });
+
+Route::post('/run-migrate', function (Request $request) {
+    // Exemplo simples: aqui você pode colocar validação de permissão
+
+    try {
+        Artisan::call('migrate', [
+            '--force' => true  // forçar rodar em produção sem pedir confirmação
+        ]);
+
+        $output = Artisan::output();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Migrações executadas com sucesso.',
+            'output' => $output,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+        ], 500);
+    }
+})->middleware('auth'); // aqui você pode definir middleware de autenticação ou autorização

@@ -8,12 +8,12 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('centros_custo', function (Blueprint $table) {
-            $table->bigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->string('codigo', 20);
             $table->string('nome', 255);
             $table->decimal('orcamento', 15, 2)->nullable();
             $table->string('responsavel', 255)->nullable();
-            $table->boolean('ativo')->nullable();
+            $table->tinyInteger('ativo')->nullable();
         });
     }
 
