@@ -48,25 +48,19 @@ Route::middleware('auth:sanctum')->group(function () {
     
 });
 
-Route::post('/run-migrate', function (Request $request) {
-    // Exemplo simples: aqui você pode colocar validação de permissão
-
+Route::post('/executar-migrate', function (Request $request) {
     try {
-        Artisan::call('migrate', [
-            '--force' => true  // forçar rodar em produção sem pedir confirmação
-        ]);
-
-        $output = Artisan::output();
+        Artisan::call('migrate', ['--force' => true]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Migrações executadas com sucesso.',
-            'output' => $output,
+            'message' => 'Migrations executadas com sucesso.',
+            'output' => Artisan::output(),
         ]);
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,
-            'message' => $e->getMessage(),
+            'message' => 'Erro ao rodar migrations: ' . $e->getMessage(),
         ], 500);
     }
-})->middleware('auth'); // aqui você pode definir middleware de autenticação ou autorização
+}); // coloque middleware ou permissão adequada

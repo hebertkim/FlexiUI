@@ -25,6 +25,11 @@
                     class="w-full px-4 py-2 mt-4 text-white bg-green-600 rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-300">
                     Gerar Migrations
                 </button>
+                <button v-if="selectedConnection && !loading" @click="executarMigrate"
+                    class="w-full px-4 py-2 mt-4 text-white bg-purple-600 rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring focus:ring-purple-300">
+                    Rodar Migrations
+                </button>
+
 
                 <p v-if="errorMessage" class="mt-4 text-sm text-red-600">{{ errorMessage }}</p>
                 <p v-if="successMessage" class="mt-4 text-sm text-green-600">{{ successMessage }}</p>
@@ -109,7 +114,26 @@ export default {
                 console.error('Erro ao chamar API:', error.response?.data || error.message);
                 alert('Erro ao gerar migrations.');
             }
+        },
+
+        async executarMigrate() {
+            try {
+                const response = await api.post('/executar-migrate', {
+                    connection_id: this.selectedConnection // opcional, se quiser personalizar
+                });
+
+                if (response.data.success) {
+                    alert('Migrations executadas com sucesso!');
+                    console.log(response.data.output);
+                } else {
+                    alert('Erro: ' + response.data.message);
+                }
+            } catch (error) {
+                console.error('Erro ao executar migrations:', error.response?.data || error.message);
+                alert('Erro ao executar migrations.');
+            }
         }
+
     }
 };
 </script>
