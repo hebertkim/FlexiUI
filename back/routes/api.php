@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\ErpConnectionController;
 use App\Http\Controllers\Api\ErpConnectController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ErpModelController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +24,7 @@ Route::post('/erp-connect', [ErpConnectController::class, 'connect']);
 Route::post('/erp-connect', [\App\Http\Controllers\Api\ErpConnectionController::class, 'conectar']);
 Route::post('/gerar-migrations', [ErpConnectionController::class, 'gerarMigrations']);
 Route::match(['get', 'post'], 'gerar-migrations', [ErpConnectionController::class, 'gerarMigrations']);
-
+Route::post('/gerar-models', [ErpModelController::class, 'gerarModels']);
 
 
 
@@ -45,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('user/{id}', [UserController::class, 'destroy']);
 
 
+
     
 });
 
@@ -64,3 +67,4 @@ Route::post('/executar-migrate', function (Request $request) {
         ], 500);
     }
 }); // coloque middleware ou permissão adequada
+
